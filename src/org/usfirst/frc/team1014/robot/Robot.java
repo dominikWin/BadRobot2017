@@ -1,10 +1,13 @@
 package org.usfirst.frc.team1014.robot;
 
 import org.usfirst.frc.team1014.robot.commands.AutoGroup;
+import org.usfirst.frc.team1014.robot.commands.CalibGroup;
 import org.usfirst.frc.team1014.robot.commands.TeleopGroup;
 import org.usfirst.frc.team1014.robot.commands.TestGroup;
+import org.usfirst.frc.team1014.robot.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 
 /**
@@ -16,11 +19,13 @@ import edu.wpi.first.wpilibj.command.Scheduler;
  */
 public class Robot extends IterativeRobot {
 	
-	TeleopGroup teleopGroup;
-	AutoGroup autoGroup;
-	TestGroup testGroup;
+	CommandGroup teleopGroup;
+	CommandGroup autoGroup;
+	CommandGroup testGroup;
+	
+	DriveTrain driveTrain;
 
-	public static OI oi;
+	public OI oi;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -29,9 +34,10 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		oi = new OI();
-		teleopGroup = new TeleopGroup(oi.xboxController0);
+		driveTrain = new DriveTrain();
+		driveTrain.rawDrive(.2);
+		teleopGroup = new CalibGroup(driveTrain);
 		autoGroup = new AutoGroup();
-		testGroup = new TestGroup();
 	}
 	
 	/*
@@ -69,7 +75,7 @@ public class Robot extends IterativeRobot {
 	 * Periodic commands are called every 20m by the system. If it does not
 	 * return within 20ms it will wait until the last one returned. 
 	 */
-
+	
 	private void periodic() {
 		Scheduler.getInstance().run();
 	}
@@ -91,6 +97,10 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void disabledPeriodic() {
+	}
+	
+	@Override
+	public void robotPeriodic() {
 	}
 }
 
