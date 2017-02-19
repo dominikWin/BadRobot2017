@@ -20,17 +20,19 @@ public class SwerveWheel {
 	}
 
 	public void drive(Vector2d translation) {
-		double pivot_speed = -rotateFunc((double) getAngle() / (double) 1024d);
+		int trans_encode = posMod((int) (-Math.atan2(translation.getX(), translation.getY()) / (2d * Math.PI) * 1024d),
+				1024);
+		System.out.println("TRANS_ANG " + trans_encode);
+		double pivot_speed = -rotateFunc(((double) posMod(getAngle() - trans_encode, 1024)) / (double) 1024d);
 		pivot.set(pivot_speed);
 	}
 
 	public double rotateFunc(double angle) {
-		System.out.println(name + " ANGLE " + angle);
 		if (angle < .25)
-			return angle;
+			return angle * 4;
 		if (angle > .75)
-			return (angle - 1);
-		return (angle - .5);
+			return (angle - 1) * 4;
+		return (angle - .5) * 4;
 	}
 
 	public void update() {
