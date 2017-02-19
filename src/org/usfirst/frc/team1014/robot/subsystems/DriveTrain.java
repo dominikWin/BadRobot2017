@@ -16,16 +16,20 @@ public class DriveTrain extends Subsystem {
 	public DriveTrain() {
 		swerveWheels = new ArrayList<SwerveWheel>() {
 			{
-				add(new SwerveWheel("A", new Vector2d(0, 0), new CANTalon(RobotMap.SWERVE_DRIVE_A),
+				add(new SwerveWheel("A", new Vector2d(.69/2, .48/2), new CANTalon(RobotMap.SWERVE_DRIVE_A),
 						new CANTalon(RobotMap.SWERVE_PIVOT_A), 10, 863, 851));
-				add(new SwerveWheel("B", new Vector2d(0, 0), new CANTalon(RobotMap.SWERVE_DRIVE_B),
+				add(new SwerveWheel("B", new Vector2d(-.69/2, .48/2), new CANTalon(RobotMap.SWERVE_DRIVE_B),
 						new CANTalon(RobotMap.SWERVE_PIVOT_B), 10, 863, 370));
-				add(new SwerveWheel("C", new Vector2d(0, 0), new CANTalon(RobotMap.SWERVE_DRIVE_C),
+				add(new SwerveWheel("C", new Vector2d(-.69/2, -.48/2), new CANTalon(RobotMap.SWERVE_DRIVE_C),
 						new CANTalon(RobotMap.SWERVE_PIVOT_C), 10, 863, 836));
-				add(new SwerveWheel("D", new Vector2d(0, 0), new CANTalon(RobotMap.SWERVE_DRIVE_D),
+				add(new SwerveWheel("D", new Vector2d(.69/2, -.48/2), new CANTalon(RobotMap.SWERVE_DRIVE_D),
 						new CANTalon(RobotMap.SWERVE_PIVOT_D), 10, 863, 578));
 			}
 		};
+	}
+	
+	public void drive(final Vector2d translation, final double rotation) {
+		swerveWheels.forEach((w) -> w.drive(translation, rotation));
 	}
 
 	public void drive(final Vector2d translation) {

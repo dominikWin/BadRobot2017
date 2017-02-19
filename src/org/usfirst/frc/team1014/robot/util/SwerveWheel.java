@@ -3,6 +3,7 @@ package org.usfirst.frc.team1014.robot.util;
 import com.ctre.CANTalon;
 
 public class SwerveWheel {
+	Vector2d position;
 	CANTalon drive, pivot;
 	String name;
 	int min, max, range;
@@ -10,6 +11,7 @@ public class SwerveWheel {
 	int encoderOffset;
 
 	public SwerveWheel(String name, Vector2d position, CANTalon drive, CANTalon pivot, int min, int max, int offset) {
+		this.position = position;
 		this.name = name;
 		this.drive = drive;
 		this.pivot = pivot;
@@ -18,13 +20,26 @@ public class SwerveWheel {
 		this.encoderOffset = offset;
 		range = max - min;
 	}
+	
+	public void drive(Vector2d translation, double rotation) {
+		drive(translation.add(position.perpendicularCCW().scale(rotation)));
+	}
 
 	public void drive(Vector2d translation) {
-		int trans_encode = posMod((int) (-Math.atan2(translation.getX(), translation.getY()) / (2d * Math.PI) * 1024d),
-				1024);
+		int trans_encode = encodeVector(translation);
 		System.out.println("TRANS_ANG " + trans_encode);
-		double pivot_speed = -rotateFunc(((double) posMod(getAngle() - trans_encode, 1024)) / (double) 1024d);
+		double angleDeviation = ((double) posMod(getAngle() - trans_encode, 1024)) / (double) 1024d;
+		double pivot_speed = -rotateFunc(angleDeviation);
+		double drive_speed = translation.magnitude();
+		if(angleDeviation > .25 && angleDeviation < .75)
+			drive_speed *= -1;
 		pivot.set(pivot_speed);
+		drive.set(drive_speed);
+	}
+
+	private int encodeVector(Vector2d translation) {
+		return posMod((int) (-Math.atan2(translation.getX(), translation.getY()) / (2d * Math.PI) * 1024d),
+				1024);
 	}
 
 	public double rotateFunc(double angle) {

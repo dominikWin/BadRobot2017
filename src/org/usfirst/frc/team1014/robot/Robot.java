@@ -78,7 +78,7 @@ public class Robot extends IterativeRobot {
 	private void periodic() {
 		// Scheduler.getInstance().run();
 		driveTrain.update();
-		driveTrain.drive(new Vector2d(oi.xboxController0.getX(Hand.kLeft), -oi.xboxController0.getY(Hand.kLeft)));
+		driveTrain.drive(new Vector2d(oi.xboxController0.getX(Hand.kLeft), -oi.xboxController0.getY(Hand.kLeft)), oi.xboxController0.getX(Hand.kRight));
 	}
 
 	@Override
