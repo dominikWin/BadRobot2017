@@ -2,8 +2,6 @@ package org.usfirst.frc.team1014.robot;
 
 import org.usfirst.frc.team1014.robot.commands.AutoGroup;
 import org.usfirst.frc.team1014.robot.commands.CalibGroup;
-import org.usfirst.frc.team1014.robot.commands.TeleopGroup;
-import org.usfirst.frc.team1014.robot.commands.TestGroup;
 import org.usfirst.frc.team1014.robot.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -35,7 +33,6 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		oi = new OI();
 		driveTrain = new DriveTrain();
-		driveTrain.rawDrive(.2);
 		teleopGroup = new CalibGroup(driveTrain);
 		autoGroup = new AutoGroup();
 	}
@@ -77,7 +74,12 @@ public class Robot extends IterativeRobot {
 	 */
 	
 	private void periodic() {
-		Scheduler.getInstance().run();
+//		Scheduler.getInstance().run();
+		if(oi.xboxController0.getAButton()) {
+			driveTrain.zeroEncoders();
+			System.out.println("Zero");
+		}
+		driveTrain.update();
 	}
 
 	@Override

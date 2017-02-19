@@ -10,7 +10,7 @@ public class CalibGroup extends TestGroup {
 		this.addSequential(new PivotTestCommand(3, driveTrain, 1));
 		this.addSequential(new PivotTestCommand(3, driveTrain, -1));
 		
-		this.addSequential(new DriveTestCommand(3, driveTrain, 1));
-		this.addSequential(new DriveTestCommand(3, driveTrain, -1));
+		this.addSequential(new DriveTestCommand(3, driveTrain, .20));
+		this.addSequential(new DriveTestCommand(3, driveTrain, -.20));
 	}
 }

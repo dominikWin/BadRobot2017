@@ -16,19 +16,27 @@ public class DriveTrain extends Subsystem {
 	public DriveTrain() {
 		swerveWheels = new ArrayList<SwerveWheel>() {
 			{
-				add(new SwerveWheel("A", new Vector2d(0, 0), new CANTalon(RobotMap.SWERVE_DRIVE_A),
-						new CANTalon(RobotMap.SWERVE_PIVOT_A)));
-				add(new SwerveWheel("B", new Vector2d(0, 0), new CANTalon(RobotMap.SWERVE_DRIVE_B),
-						new CANTalon(RobotMap.SWERVE_PIVOT_B)));
+//				add(new SwerveWheel("A", new Vector2d(0, 0), new CANTalon(RobotMap.SWERVE_DRIVE_A),
+//						new CANTalon(RobotMap.SWERVE_PIVOT_A)));
+//				add(new SwerveWheel("B", new Vector2d(0, 0), new CANTalon(RobotMap.SWERVE_DRIVE_B),
+//						new CANTalon(RobotMap.SWERVE_PIVOT_B)));
 				add(new SwerveWheel("C", new Vector2d(0, 0), new CANTalon(RobotMap.SWERVE_DRIVE_C),
-						new CANTalon(RobotMap.SWERVE_PIVOT_C)));
-				add(new SwerveWheel("D", new Vector2d(0, 0), new CANTalon(RobotMap.SWERVE_DRIVE_D),
-						new CANTalon(RobotMap.SWERVE_PIVOT_D)));
+						new CANTalon(RobotMap.SWERVE_PIVOT_C), 10, 863));
+//				add(new SwerveWheel("D", new Vector2d(0, 0), new CANTalon(RobotMap.SWERVE_DRIVE_D),
+//						new CANTalon(RobotMap.SWERVE_PIVOT_D)));
 			}
 		};
 	}
 
 	public void drive(final double rotation, final Vector2d translation) {
+	}
+	
+	public void zeroEncoders() {
+		swerveWheels.forEach(SwerveWheel::zeroEncoder);
+	}
+	
+	public void update() {
+		swerveWheels.forEach(SwerveWheel::update);
 	}
 
 	public void rawDrive(double speed) {
