@@ -3,7 +3,9 @@ package org.usfirst.frc.team1014.robot;
 import org.usfirst.frc.team1014.robot.commands.AutoGroup;
 import org.usfirst.frc.team1014.robot.commands.CalibGroup;
 import org.usfirst.frc.team1014.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team1014.robot.util.Vector2d;
 
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -16,11 +18,11 @@ import edu.wpi.first.wpilibj.command.Scheduler;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	
+
 	CommandGroup teleopGroup;
 	CommandGroup autoGroup;
 	CommandGroup testGroup;
-	
+
 	DriveTrain driveTrain;
 
 	public OI oi;
@@ -36,11 +38,11 @@ public class Robot extends IterativeRobot {
 		teleopGroup = new CalibGroup(driveTrain);
 		autoGroup = new AutoGroup();
 	}
-	
+
 	/*
 	 * An Init function is called whenever the robot changes state.
 	 */
-	
+
 	private void stateChangeInit() {
 		Scheduler.getInstance().removeAll();
 	}
@@ -67,19 +69,16 @@ public class Robot extends IterativeRobot {
 	public void disabledInit() {
 		stateChangeInit();
 	}
-	
+
 	/*
 	 * Periodic commands are called every 20m by the system. If it does not
-	 * return within 20ms it will wait until the last one returned. 
+	 * return within 20ms it will wait until the last one returned.
 	 */
-	
+
 	private void periodic() {
-//		Scheduler.getInstance().run();
-		if(oi.xboxController0.getAButton()) {
-			driveTrain.zeroEncoders();
-			System.out.println("Zero");
-		}
+		// Scheduler.getInstance().run();
 		driveTrain.update();
+		driveTrain.drive(new Vector2d(oi.xboxController0.getX(Hand.kLeft), -oi.xboxController0.getY(Hand.kLeft)));
 	}
 
 	@Override
@@ -100,9 +99,8 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void disabledPeriodic() {
 	}
-	
+
 	@Override
 	public void robotPeriodic() {
 	}
 }
-
