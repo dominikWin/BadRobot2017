@@ -29,7 +29,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		oi = new OI();
-		teleopGroup = new TeleopGroup();
+		teleopGroup = new TeleopGroup(oi.xboxController0);
 		autoGroup = new AutoGroup();
 		testGroup = new TestGroup();
 	}
