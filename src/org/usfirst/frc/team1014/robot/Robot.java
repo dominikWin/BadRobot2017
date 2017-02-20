@@ -78,7 +78,15 @@ public class Robot extends IterativeRobot {
 	private void periodic() {
 		// Scheduler.getInstance().run();
 		driveTrain.update();
-		driveTrain.drive(new Vector2d(oi.xboxController0.getX(Hand.kLeft), -oi.xboxController0.getY(Hand.kLeft)), oi.xboxController0.getX(Hand.kRight));
+
+		Vector2d translation = new Vector2d(oi.xboxController0.getX(Hand.kLeft), -oi.xboxController0.getY(Hand.kLeft));
+		double rotation = -oi.xboxController0.getX(Hand.kRight);
+		if (translation.magnitude() < .15)
+			translation = new Vector2d(0, 0);
+		if (Math.abs(rotation) < .15)
+			rotation = 0;
+
+		driveTrain.drive(translation, rotation);
 	}
 
 	@Override

@@ -17,7 +17,7 @@ public class DriveTrain extends Subsystem {
 		swerveWheels = new ArrayList<SwerveWheel>() {
 			{
 				add(new SwerveWheel("A", new Vector2d(.69/2, .48/2), new CANTalon(RobotMap.SWERVE_DRIVE_A),
-						new CANTalon(RobotMap.SWERVE_PIVOT_A), 10, 863, 851));
+						new CANTalon(RobotMap.SWERVE_PIVOT_A), 10, 863, 945));
 				add(new SwerveWheel("B", new Vector2d(-.69/2, .48/2), new CANTalon(RobotMap.SWERVE_DRIVE_B),
 						new CANTalon(RobotMap.SWERVE_PIVOT_B), 10, 863, 370));
 				add(new SwerveWheel("C", new Vector2d(-.69/2, -.48/2), new CANTalon(RobotMap.SWERVE_DRIVE_C),
@@ -28,7 +28,7 @@ public class DriveTrain extends Subsystem {
 		};
 	}
 	
-	public void drive(final Vector2d translation, final double rotation) {
+	public void drive(Vector2d translation, double rotation) {
 		swerveWheels.forEach((w) -> w.drive(translation, rotation));
 	}
 
