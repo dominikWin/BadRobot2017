@@ -79,6 +79,9 @@ public class Robot extends IterativeRobot {
 		// Scheduler.getInstance().run();
 		driveTrain.update();
 
+		if (oi.xboxController0.getAButton())
+			driveTrain.zeroYaw();
+
 		Vector2d translation = new Vector2d(oi.xboxController0.getX(Hand.kLeft), -oi.xboxController0.getY(Hand.kLeft));
 		double rotation = -oi.xboxController0.getX(Hand.kRight);
 		if (translation.magnitude() < .15)
@@ -86,7 +89,8 @@ public class Robot extends IterativeRobot {
 		if (Math.abs(rotation) < .15)
 			rotation = 0;
 
-		driveTrain.drive(translation, rotation);
+		if (!oi.xboxController0.getXButton())
+			driveTrain.drive(translation, rotation, !oi.xboxController0.getYButton());
 	}
 
 	@Override
