@@ -22,7 +22,7 @@ public class AutoRotate extends Command {
 	protected void execute() {
 		diff = DriveTrain.getInstance().getYaw() - angle;
 
-		DriveTrain.getInstance().drive(Math.abs(diff) / (3 * diff), new Vector2d(0, 0));	//scale speed to 1/3 and get correct sign using abs
+		DriveTrain.getInstance().drive(Math.abs(diff) / (3 * diff), new Vector2d(0, 0), true);	//scale speed to 1/3 and get correct sign using abs
 		
 		if (Math.abs(diff) < 10) {
 			count++;
@@ -31,7 +31,7 @@ public class AutoRotate extends Command {
 	}
 
 	protected void end() {
-		DriveTrain.getInstance().drive(0, new Vector2d(0, 0));
+		DriveTrain.getInstance().drive(0, new Vector2d(0, 0), true);
 	}
 
 	@Override

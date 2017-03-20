@@ -18,19 +18,11 @@ public class UseClimber extends Command {
 	}
 
 	protected void execute() {
-		if (OI.xboxController1.getBButton()){
-			/*BButton = true;
-		if (!OI.xboxController1.getBButton() && BButton) {
-			BButton = false;
-			isClimbing = !isClimbing;
-		}
-		if (isClimbing) {*/
+		if (OI.xboxController1.getBButton()) {
 			climber.climb(-1);
-		}
-		if(OI.xboxController1.getAButton()){
+		} else if (OI.xboxController1.getAButton()) {
 			climber.climb(-.5);
-		}
-		else
+		} else
 			climber.climb(0);
 
 		if (OI.xboxController1.getTriggerAxis(Hand.kRight) > .15 || OI.xboxController1.getTriggerAxis(Hand.kLeft) > .15)

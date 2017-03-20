@@ -5,6 +5,7 @@ import org.usfirst.frc.team1014.robot.commands.auto.AutoRotate;
 import org.usfirst.frc.team1014.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team1014.robot.utils.Vector2d;
 
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class TeleDrive extends Command {
@@ -34,8 +35,11 @@ public class TeleDrive extends Command {
 		if (Math.abs(rotation) < .15)
 			rotation = 0;
 
-		DriveTrain.getInstance().drive(rotation,
-				new Vector2d(OI.xboxController0.getRawAxis(0), -OI.xboxController0.getRawAxis(1)));
+		Vector2d translation = new Vector2d(OI.xboxController0.getRawAxis(0), -OI.xboxController0.getRawAxis(1));
+		if (OI.xboxController0.getBumper(Hand.kRight)) {
+			translation = translation.scale(.5);
+		}
+		DriveTrain.getInstance().drive(rotation, translation, !OI.xboxController0.getBumper(Hand.kRight));
 		System.out.println(DriveTrain.getInstance().getCurrent());
 
 		if (OI.xboxController0.getAButton()) {

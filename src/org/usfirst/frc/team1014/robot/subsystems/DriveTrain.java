@@ -35,11 +35,11 @@ public class DriveTrain extends Subsystem {
 			{
 				// Relative Encoder values are not correct
 				add(new SwerveWheel("A", "left", new Vector2d(L / 2, W / 2), RobotMap.DRIVE_MOTOR_A,
-						RobotMap.PIVOT_MOTOR_A, 375, 853, 15, ENCODER_CPR)); 
+						RobotMap.PIVOT_MOTOR_A, 375, 853, 15, ENCODER_CPR));
 				add(new SwerveWheel("B", "right", new Vector2d(-L / 2, W / 2), RobotMap.DRIVE_MOTOR_B,
 						RobotMap.PIVOT_MOTOR_B, 543, 867, 13, ENCODER_CPR));
 				add(new SwerveWheel("C", "right", new Vector2d(-L / 2, -W / 2), RobotMap.DRIVE_MOTOR_C,
-						RobotMap.PIVOT_MOTOR_C, 587, 882, 13, ENCODER_CPR)); 
+						RobotMap.PIVOT_MOTOR_C, 550, 882, 13, ENCODER_CPR));
 				add(new SwerveWheel("D", "left", new Vector2d(L / 2, -W / 2), RobotMap.DRIVE_MOTOR_D,
 						RobotMap.PIVOT_MOTOR_D, 294, 888, 13, ENCODER_CPR));
 			}
@@ -58,23 +58,23 @@ public class DriveTrain extends Subsystem {
 	public double getYaw() {
 		return navx.getYaw();
 	}
-	
-	public void test(){
+
+	public void test() {
 		swerveWheels.forEach((w) -> w.print());
 	}
-	
-	public double getCurrent(){
+
+	public double getCurrent() {
 		double sum = 0;
-		
-		for(int i = 0; i < swerveWheels.size(); i++)
+
+		for (int i = 0; i < swerveWheels.size(); i++)
 			sum += swerveWheels.get(i).getCurrent();
-		
+
 		return sum / swerveWheels.size();
 	}
 
-	public void drive(final double rotation, Vector2d translation) {
+	public void drive(final double rotation, Vector2d translation, boolean field_centric) {
 
-		final Vector2d move = translation.rotateDegrees(navx.getYaw() * -1);
+		final Vector2d move = field_centric ? translation.rotateDegrees(navx.getYaw() * -1) : translation;
 
 		swerveWheels.forEach((w) -> w.drive(move, rotation, normalizer));
 

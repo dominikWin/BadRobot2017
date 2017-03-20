@@ -39,7 +39,7 @@ public class SwerveWheel {
 
 		pivot.changeControlMode(TalonControlMode.Position);
 		pivot.setFeedbackDevice(FeedbackDevice.AnalogEncoder);
-		pivot.setPID(4, 0, 0);
+		pivot.setPID(11, 0, 0);
 		pivot.enableControl();
 
 	}
@@ -53,18 +53,9 @@ public class SwerveWheel {
 
 		double currentPosition = pivot.getPosition();
 		double rawCurrent = pivot.getAnalogInRaw();
-		
-		
-		/*if(id.equals("D")){
-			System.out.println(id + ": " + pivot.getAnalogInRaw());
-		}else
-			System.out.print(id + ": " + pivot.getAnalogInRaw() + "  ");
-		
-		if(id.equals("D")){
-			System.out.println(id + ": " + drive.getOutputCurrent());
-		}else
-			System.out.print(id + ": " + drive.getOutputCurrent() + "  ");*/
 
+		if (id.equals("A"))
+			System.out.println("A: " + rawCurrent);
 
 		double currentRadians = (Math.PI * 2.0 * (rawCurrent - offset)) / range;
 
@@ -94,15 +85,15 @@ public class SwerveWheel {
 
 		normalizer.add(drive, speed);
 	}
-	
-	public void print(){
-		if(id.equals("D")){
+
+	public void print() {
+		if (id.equals("D")) {
 			System.out.println(id + ": " + pivot.getAnalogInRaw());
-		}else
+		} else
 			System.out.print(id + ": " + pivot.getAnalogInRaw() + "  ");
 	}
-	
-	public double getCurrent(){
+
+	public double getCurrent() {
 		return drive.getOutputCurrent();
 	}
 

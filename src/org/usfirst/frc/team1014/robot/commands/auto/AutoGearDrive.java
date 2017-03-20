@@ -16,7 +16,7 @@ public class AutoGearDrive extends Command {
 	}
 
 	protected void execute() {
-		driveTrain.drive(0, new Vector2d(0, .5));
+		driveTrain.drive(0, new Vector2d(0, .5), true);
 		System.out.println(driveTrain.getCurrent());
 		if (driveTrain.getCurrent() > 2)
 			count++;
@@ -25,7 +25,7 @@ public class AutoGearDrive extends Command {
 	}
 
 	protected void end() {
-		driveTrain.drive(0, new Vector2d(0, 0));
+		driveTrain.drive(0, new Vector2d(0, 0), true);
 	}
 
 	@Override

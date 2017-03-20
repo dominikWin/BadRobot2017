@@ -25,12 +25,12 @@ public class AutoDrive extends Command {
 	}
 
 	protected void execute() {
-		DriveTrain.getInstance().drive(0, translation);
+		DriveTrain.getInstance().drive(0, translation, true);
 		passedTime = Utility.getFPGATime() - startTime;
 	}
 
 	protected void end() {
-		DriveTrain.getInstance().drive(0, new Vector2d(0, 0));
+		DriveTrain.getInstance().drive(0, new Vector2d(0, 0), true);
 	}
 
 	@Override
