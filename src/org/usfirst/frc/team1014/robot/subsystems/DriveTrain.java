@@ -35,13 +35,13 @@ public class DriveTrain extends Subsystem {
 			{
 				// Relative Encoder values are not correct
 				add(new SwerveWheel("A", "left", new Vector2d(L / 2, W / 2), RobotMap.DRIVE_MOTOR_A,
-						RobotMap.PIVOT_MOTOR_A, 375, 853, 15, ENCODER_CPR));
+						RobotMap.PIVOT_MOTOR_A, 331, 853, 15, ENCODER_CPR));
 				add(new SwerveWheel("B", "right", new Vector2d(-L / 2, W / 2), RobotMap.DRIVE_MOTOR_B,
-						RobotMap.PIVOT_MOTOR_B, 543, 867, 13, ENCODER_CPR));
+						RobotMap.PIVOT_MOTOR_B, 54, 867, 13, ENCODER_CPR));
 				add(new SwerveWheel("C", "right", new Vector2d(-L / 2, -W / 2), RobotMap.DRIVE_MOTOR_C,
-						RobotMap.PIVOT_MOTOR_C, 550, 882, 13, ENCODER_CPR));
+						RobotMap.PIVOT_MOTOR_C, 114, 882, 13, ENCODER_CPR));
 				add(new SwerveWheel("D", "left", new Vector2d(L / 2, -W / 2), RobotMap.DRIVE_MOTOR_D,
-						RobotMap.PIVOT_MOTOR_D, 294, 888, 13, ENCODER_CPR));
+						RobotMap.PIVOT_MOTOR_D, 66, 888, 13, ENCODER_CPR));
 			}
 		};
 
