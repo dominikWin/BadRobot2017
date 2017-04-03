@@ -31,7 +31,7 @@ public class SwerveWheel {
 		this.encoderMin = encoderMin;
 		range = encoderMax - encoderMin;
 
-		perpendicular = location;
+		perpendicular = location.perpendicularCW();
 		perpendicular = perpendicular.normalize();
 
 		drive = new CANTalon(driveMotorPin);
