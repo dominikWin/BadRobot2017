@@ -1,5 +1,8 @@
 package org.usfirst.frc.team1014.robot;
 
+import java.util.Optional;
+import java.util.logging.Logger;
+
 import org.usfirst.frc.team1014.robot.commands.AutoGroup;
 import org.usfirst.frc.team1014.robot.commands.CommandBase;
 import org.usfirst.frc.team1014.robot.commands.RelativeDrive;
@@ -47,6 +50,10 @@ public class Robot extends IterativeRobot {
 	SmartDashboard smartDashboard;
 	UsbCamera camera;
 	
+	RobotSessionLog robotSessionLog;
+	
+	private static Logger logger = Logger.getLogger(Robot.class.getName());
+	
 	public static OI oi;
 	
 	CANTalon climber;
@@ -57,6 +64,18 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
+		Optional<RobotSessionLog> tmp = RobotSessionLog.createRobotSessionLog();
+		if(!tmp.isPresent()) {
+			System.err.println("Can't create RobotSessionLog");
+			System.exit(0);
+		}
+		robotSessionLog = tmp.get();
+		
+		System.out.println();
+		System.out.println("Started session >>>>>>>>  " + robotSessionLog.getSessionID() + "  <<<<<<<<");
+		System.out.println();
+		logger.info("Started RobotSessionLog with id " + robotSessionLog.getSessionID());
+		
 		oi = new OI();
 		teleopGroup = new TeleopGroup();
 		autoGroup = new AutoGroup();
