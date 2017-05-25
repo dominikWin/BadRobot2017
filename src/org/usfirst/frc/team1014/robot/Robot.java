@@ -71,10 +71,15 @@ public class Robot extends IterativeRobot {
 		}
 		robotSessionLog = tmp.get();
 		
+		// do not remove, this prints even when the console log level is too low
 		System.out.println();
 		System.out.println("Started session >>>>>>>>  " + robotSessionLog.getSessionID() + "  <<<<<<<<");
 		System.out.println();
+		
 		logger.info("Started RobotSessionLog with id " + robotSessionLog.getSessionID());
+		logger.info("Java version " + System.getProperty("java.version"));
+		logger.info(System.getProperty("os.name") + " " + System.getProperty("os.version"));
+		logger.info("Running as user " + System.getProperty("user.name") + " (WD: " + System.getProperty("user.dir") + " HOME: " + System.getProperty("user.home") + ")");
 		
 		oi = new OI();
 		teleopGroup = new TeleopGroup();
