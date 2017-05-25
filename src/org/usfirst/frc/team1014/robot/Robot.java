@@ -47,8 +47,6 @@ public class Robot extends IterativeRobot {
 	SmartDashboard smartDashboard;
 	UsbCamera camera;
 	
-	PowerAnalyser powerAnalyser;
-
 	public static OI oi;
 	
 	CANTalon climber;
@@ -94,19 +92,6 @@ public class Robot extends IterativeRobot {
 		if (CommandBase.lights != null) {
 			CommandBase.lights.setLights(LEDState.kDEFAULT);
 		}
-		
-		powerAnalyser = new PowerAnalyser(new PowerDistributionPanel()) {{
-			add("PIVOT-A", 7);
-			add("DRIVE-A", 3);
-			add("PIVOT-B", 4);
-			add("DRIVE-B", 14);
-			add("PIVOT-C", 11);
-			add("DRIVE-C", 15);
-			add("PIVOT-D", 8);
-			add("DRIVE-D", 2);
-			add("CLIMB", 0);
-			printFieldHeader();
-		}};
 	}
 
 	/*
@@ -151,7 +136,6 @@ public class Robot extends IterativeRobot {
 
 	private void periodic() {
 		Scheduler.getInstance().run();
-		powerAnalyser.update();
 	}
 
 	@Override
