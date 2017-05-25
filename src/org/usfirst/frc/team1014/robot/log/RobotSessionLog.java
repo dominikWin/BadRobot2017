@@ -1,4 +1,4 @@
-package org.usfirst.frc.team1014.robot;
+package org.usfirst.frc.team1014.robot.log;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -18,10 +18,11 @@ import java.util.logging.SimpleFormatter;
 public class RobotSessionLog {
 	private static final String LOG_ROOT = "/home/lvuser/log";
 	private static final String LOG_SESSION_TABLE = LOG_ROOT + "/sessions";
-	private static final String SESSION_TABLE_DATE_FORMAT = "MMMM dd, yyyy hh:mm:ss a"; // matches
-																						// logger
+	private static final String SESSION_TABLE_DATE_FORMAT = "MMMM dd, yyyy hh:mm:ss a";
 	private static final int SESSION_ID_LENGTH = 3;
 	private static final String SESSION_ID_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	private static final String CSV_TABLE_NAME = "table.csv";
+	private static final String CSV_DATA_NAME = "data.csv";
 
 	private static Optional<RobotSessionLog> instance = Optional.empty();
 
@@ -120,6 +121,10 @@ public class RobotSessionLog {
 		ConsoleHandler consoleHandler = new ConsoleHandler();
 		rootLogger.addHandler(consoleHandler);
 		consoleHandler.setLevel(Level.INFO);
+	}
+	
+	public CSVLog createCSVLog() {
+		return new CSVLog(sessionDirPath + "/" + CSV_DATA_NAME, sessionDirPath + "/" + CSV_TABLE_NAME);
 	}
 
 	public String getSessionID() {

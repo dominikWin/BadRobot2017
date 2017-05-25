@@ -20,6 +20,9 @@ import org.usfirst.frc.team1014.robot.commands.auto.GearRight;
 import org.usfirst.frc.team1014.robot.commands.auto.ShootCenter;
 import org.usfirst.frc.team1014.robot.commands.auto.ShootLeft;
 import org.usfirst.frc.team1014.robot.commands.auto.ShootRight;
+import org.usfirst.frc.team1014.robot.log.CSVLog;
+import org.usfirst.frc.team1014.robot.log.CSVLogColumn;
+import org.usfirst.frc.team1014.robot.log.RobotSessionLog;
 import org.usfirst.frc.team1014.robot.subsystems.LEDLights.LEDState;
 import org.usfirst.frc.team1014.robot.utils.Vector2d;
 
@@ -27,6 +30,7 @@ import com.ctre.CANTalon;
 
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -50,13 +54,18 @@ public class Robot extends IterativeRobot {
 	SmartDashboard smartDashboard;
 	UsbCamera camera;
 	
+	DriverStation driverStation;
+	
 	RobotSessionLog robotSessionLog;
+	CSVLog csvLog;
 	
 	private static Logger logger = Logger.getLogger(Robot.class.getName());
 	
 	public static OI oi;
 	
 	CANTalon climber;
+	
+	int updateIndex;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -80,6 +89,15 @@ public class Robot extends IterativeRobot {
 		logger.info("Java version " + System.getProperty("java.version"));
 		logger.info(System.getProperty("os.name") + " " + System.getProperty("os.version"));
 		logger.info("Running as user " + System.getProperty("user.name") + " (WD: " + System.getProperty("user.dir") + " HOME: " + System.getProperty("user.home") + ")");
+		
+		csvLog = robotSessionLog.createCSVLog();
+		
+		updateIndex = 0;
+		csvLog.add(new CSVLogColumn("index", "index", "Value that increments with each periodic call", () -> updateIndex));
+		driverStation = DriverStation.getInstance();
+		csvLog.add(new CSVLogColumn("battery_voltage", "V", "Battery voltage from driver station", () -> driverStation.getBatteryVoltage()));
+
+		csvLog.done();
 		
 		oi = new OI();
 		teleopGroup = new TeleopGroup();
@@ -153,7 +171,9 @@ public class Robot extends IterativeRobot {
 	 */
 
 	private void periodic() {
+		updateIndex++;
 		Scheduler.getInstance().run();
+		csvLog.log();
 	}
 
 	@Override
@@ -175,5 +195,6 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void disabledPeriodic() {
+		periodic();
 	}
 }
