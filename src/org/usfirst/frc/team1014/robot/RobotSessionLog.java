@@ -2,10 +2,10 @@ package org.usfirst.frc.team1014.robot;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.Optional;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.FileHandler;
+import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
@@ -19,7 +19,7 @@ public class RobotSessionLog {
 
 	private final String sessionID;
 	private final String sessionDirPath;
-	private Logger rootLogger = Logger.getLogger(""); // apply all project-wide settings to this
+	private Logger rootLogger = Logger.getLogger("");
 	private Logger logger = Logger.getLogger(RobotSessionLog.class.getName());
 
 	public static Optional<RobotSessionLog> createRobotSessionLog() {
@@ -75,7 +75,11 @@ public class RobotSessionLog {
 	private RobotSessionLog(String sessionID) {
 		this.sessionID = sessionID;
 		this.sessionDirPath = LOG_ROOT + "/" + sessionID;
-		
+
+		// remove default console logger, stop double printing
+		for (Handler h : rootLogger.getHandlers())
+			rootLogger.removeHandler(h);
+
 		FileHandler fileHandler;
 		try {
 			fileHandler = new FileHandler(sessionDirPath + "/run.log");
