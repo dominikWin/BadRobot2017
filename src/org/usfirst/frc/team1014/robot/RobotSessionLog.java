@@ -1,7 +1,12 @@
 package org.usfirst.frc.team1014.robot;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Optional;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.FileHandler;
@@ -12,6 +17,9 @@ import java.util.logging.SimpleFormatter;
 
 public class RobotSessionLog {
 	private static final String LOG_ROOT = "/home/lvuser/log";
+	private static final String LOG_SESSION_TABLE = LOG_ROOT + "/sessions";
+	private static final String SESSION_TABLE_DATE_FORMAT = "MMMM dd, yyyy hh:mm:ss a"; // matches
+																						// logger
 	private static final int SESSION_ID_LENGTH = 3;
 	private static final String SESSION_ID_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
@@ -50,6 +58,15 @@ public class RobotSessionLog {
 		if (!sessionDir.mkdirs()) {
 			System.err.println("Can't create directory " + sessionDir.getAbsolutePath());
 			return Optional.empty();
+		}
+
+		try {
+			BufferedWriter out = new BufferedWriter(new FileWriter(LOG_SESSION_TABLE, true));
+			out.write((new SimpleDateFormat(SESSION_TABLE_DATE_FORMAT)).format(new Date()) + ": " + sessionID + "\n");
+			out.flush();
+			out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 
 		instance = Optional.of(new RobotSessionLog(sessionID));
