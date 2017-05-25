@@ -43,7 +43,7 @@ public class Robot extends IterativeRobot {
 	AutoGroup autoGroup;
 	TestGroup testGroup;
 
-	SendableChooser driveChooser, autoChooser;
+	SendableChooser autoChooser;
 	SmartDashboard smartDashboard;
 	UsbCamera camera;
 	
@@ -63,11 +63,6 @@ public class Robot extends IterativeRobot {
 		testGroup = new TestGroup();
 		smartDashboard = new SmartDashboard();
 		
-		driveChooser = new SendableChooser();
-		driveChooser.addDefault("Swerve Drive", new TeleDrive());
-		driveChooser.addObject("Relative Swerve", new RelativeDrive());
-		driveChooser.addObject("Tank Drive", new TankDrive());
-		
 		autoChooser = new SendableChooser();
 		autoChooser.addDefault("CrossLeft", new CrossLeft());
 		autoChooser.addObject("CrossRight", new CrossRight());
@@ -81,7 +76,6 @@ public class Robot extends IterativeRobot {
 		
 		smartDashboard.putNumber("Delay", 0);
 		
-		smartDashboard.putData("Drive Mode Chooser", driveChooser);
 		smartDashboard.putData("Auto Chooser", autoChooser);
 		
 		//climber = new CANTalon(30);
